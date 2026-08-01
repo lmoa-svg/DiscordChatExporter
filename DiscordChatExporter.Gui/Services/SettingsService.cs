@@ -20,7 +20,7 @@ public partial class SettingsService()
     public partial ThemeVariant Theme { get; set; }
 
     [ObservableProperty]
-    public partial Language Language { get; set; }
+    public partial Language Language { get; set; } = Language.Russian;
 
     [ObservableProperty]
     public partial bool IsAutoUpdateEnabled { get; set; } = true;

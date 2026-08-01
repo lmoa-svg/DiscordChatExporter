@@ -28,7 +28,7 @@ public partial class LocalizationManager : ObservableObject, IDisposable
     }
 
     [ObservableProperty]
-    public partial Language Language { get; set; } = Language.System;
+    public partial Language Language { get; set; } = Language.Russian;
 
     private string Get([CallerMemberName] string? key = null)
     {
@@ -41,16 +41,18 @@ public partial class LocalizationManager : ObservableObject, IDisposable
                 CultureInfo.CurrentUICulture.ThreeLetterISOLanguageName.ToLowerInvariant() switch
                 {
                     "ukr" => UkrainianLocalization,
+                    "rus" => RussianLocalization,
                     "deu" => GermanLocalization,
                     "fra" => FrenchLocalization,
                     "spa" => SpanishLocalization,
-                    _ => EnglishLocalization,
+                    _ => RussianLocalization,
                 },
+            Language.Russian => RussianLocalization,
             Language.Ukrainian => UkrainianLocalization,
             Language.German => GermanLocalization,
             Language.French => FrenchLocalization,
             Language.Spanish => SpanishLocalization,
-            _ => EnglishLocalization,
+            _ => RussianLocalization,
         };
 
         if (

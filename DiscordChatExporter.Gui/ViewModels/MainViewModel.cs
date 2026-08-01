@@ -21,44 +21,15 @@ public partial class MainViewModel(
 
     public DashboardViewModel Dashboard { get; } = viewModelManager.GetDashboardViewModel();
 
-    private async Task ShowUkraineSupportMessageAsync()
+    private Task ShowUkraineSupportMessageAsync()
     {
-        if (!settingsService.IsUkraineSupportMessageEnabled)
-            return;
-
-        var dialog = viewModelManager.GetMessageBoxViewModel(
-            localizationManager.UkraineSupportTitle,
-            localizationManager.UkraineSupportMessage,
-            localizationManager.LearnMoreButton,
-            localizationManager.CloseButton
-        );
-
-        // Disable this message in the future
-        settingsService.IsUkraineSupportMessageEnabled = false;
-        settingsService.Save();
-
-        if (await dialogManager.ShowDialogAsync(dialog) == true)
-            Process.StartShellExecute("https://tyrrrz.me/ukraine?source=discordchatexporter");
+        _ = dialogManager;
+        return Task.CompletedTask;
     }
 
-    private async Task ShowDevelopmentBuildMessageAsync()
+    private Task ShowDevelopmentBuildMessageAsync()
     {
-        if (!Program.IsDevelopmentBuild)
-            return;
-
-        // If debugging, the user is likely a developer
-        if (Debugger.IsAttached)
-            return;
-
-        var dialog = viewModelManager.GetMessageBoxViewModel(
-            localizationManager.UnstableBuildTitle,
-            string.Format(localizationManager.UnstableBuildMessage, Program.Name),
-            localizationManager.SeeReleasesButton,
-            localizationManager.CloseButton
-        );
-
-        if (await dialogManager.ShowDialogAsync(dialog) == true)
-            Process.StartShellExecute(Program.ProjectReleasesUrl);
+        return Task.CompletedTask;
     }
 
     private async Task CheckForUpdatesAsync()

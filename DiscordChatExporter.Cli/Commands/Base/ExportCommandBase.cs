@@ -143,7 +143,7 @@ public abstract class ExportCommandBase : DiscordCommandBase
         // Use a converter to accept '1' as 'true' to reuse the existing environment variable
         Converter = typeof(TruthyBooleanInputConverter)
     )]
-    public bool IsUkraineSupportMessageDisabled { get; set; } = false;
+    public bool IsUkraineSupportMessageDisabled { get; set; } = true;
 
     [field: AllowNull, MaybeNull]
     protected ChannelExporter Exporter => field ??= new ChannelExporter(Discord);
