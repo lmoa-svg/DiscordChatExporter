@@ -78,6 +78,30 @@ public abstract class ExportCommandBase : DiscordCommandBase
     public MessageFilter MessageFilter { get; set; } = MessageFilter.Null;
 
     [CommandOption(
+        "min-length",
+        Description = "Only include messages with at least this many characters."
+    )]
+    public int? MinLength { get; set; }
+
+    [CommandOption(
+        "max-length",
+        Description = "Only include messages with at most this many characters."
+    )]
+    public int? MaxLength { get; set; }
+
+    [CommandOption(
+        "include-words",
+        Description = "Only include messages containing these words/phrases."
+    )]
+    public string? IncludeWords { get; set; }
+
+    [CommandOption(
+        "exclude-words",
+        Description = "Exclude messages containing these words/phrases."
+    )]
+    public string? ExcludeWords { get; set; }
+
+    [CommandOption(
         "parallel",
         Description = "Limits how many channels can be exported in parallel."
     )]
@@ -280,7 +304,13 @@ public abstract class ExportCommandBase : DiscordCommandBase
                                         After,
                                         Before,
                                         PartitionLimit,
-                                        MessageFilter,
+                                        MessageFilter.Combine(
+                                            baseFilter: MessageFilter,
+                                            includeWords: IncludeWords,
+                                            excludeWords: ExcludeWords,
+                                            minLength: MinLength,
+                                            maxLength: MaxLength
+                                        ),
                                         IsReverseMessageOrder,
                                         ShouldFormatMarkdown,
                                         ShouldDownloadAssets,

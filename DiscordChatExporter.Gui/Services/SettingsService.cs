@@ -58,6 +58,30 @@ public partial class SettingsService()
     public partial string? LastMessageFilterValue { get; set; }
 
     [ObservableProperty]
+    public partial string? LastFromUserValue { get; set; }
+
+    [ObservableProperty]
+    public partial string? LastMentionsUserValue { get; set; }
+
+    [ObservableProperty]
+    public partial FilterContentType LastFilterContentType { get; set; }
+
+    [ObservableProperty]
+    public partial FilterPinnedStatus LastFilterPinnedStatus { get; set; }
+
+    [ObservableProperty]
+    public partial string? LastMinLengthValue { get; set; }
+
+    [ObservableProperty]
+    public partial string? LastMaxLengthValue { get; set; }
+
+    [ObservableProperty]
+    public partial string? LastIncludeWordsValue { get; set; }
+
+    [ObservableProperty]
+    public partial string? LastExcludeWordsValue { get; set; }
+
+    [ObservableProperty]
     public partial bool LastIsReverseMessageOrder { get; set; }
 
     [ObservableProperty]

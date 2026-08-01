@@ -105,9 +105,44 @@ public partial class LocalizationManager
             [nameof(PartitionLimitLabel)] = "Разделение экспорта",
             [nameof(PartitionLimitTooltip)] =
                 "Разбить вывод на части, каждая ограничена указанным количеством сообщений (напр. '100') или размером файла (напр. '10mb')",
-            [nameof(MessageFilterLabel)] = "Фильтр сообщений",
+            [nameof(MessageFilterLabel)] = "Дополнительное выражение",
             [nameof(MessageFilterTooltip)] =
-                "Включать только сообщения, соответствующие этому фильтру (напр. 'from:foo#1234' или 'has:image'). См. документацию для подробностей.",
+                "Включать только сообщения, соответствующие этому выражению (напр. 'from:foo#1234' или 'has:image'). См. документацию для подробностей.",
+            [nameof(FilterFromUserLabel)] = "От",
+            [nameof(FilterFromUserTooltip)] =
+                "Отправлено любым из выбранных пользователей или ботов (напр. 'kutos0')",
+            [nameof(FilterMentionsUserLabel)] = "Упоминания",
+            [nameof(FilterMentionsUserTooltip)] =
+                "Содержит упоминание любого из выбранных пользователей (напр. 'kutos0')",
+            [nameof(FilterContentTypeLabel)] = "Содержит контент",
+            [nameof(FilterContentTypeTooltip)] =
+                "Фильтровать сообщения по наличию вложений, изображений, видео или ссылок",
+            [nameof(FilterPinnedStatusLabel)] = "Закреплено",
+            [nameof(FilterPinnedStatusTooltip)] =
+                "Фильтровать сообщения по статусу закрепления в канале",
+            [nameof(FilterContentTypeAny)] = "Любой контент",
+            [nameof(FilterContentTypeLink)] = "Ссылки",
+            [nameof(FilterContentTypeEmbed)] = "Эмбеды",
+            [nameof(FilterContentTypeFile)] = "Файлы",
+            [nameof(FilterContentTypeVideo)] = "Видео",
+            [nameof(FilterContentTypeImage)] = "Изображения",
+            [nameof(FilterContentTypeSound)] = "Звук / Аудио",
+            [nameof(FilterContentTypeInvite)] = "Приглашения",
+            [nameof(FilterPinnedStatusAny)] = "Любое",
+            [nameof(FilterPinnedStatusYes)] = "Да",
+            [nameof(FilterPinnedStatusNo)] = "Нет",
+            [nameof(MinLengthLabel)] = "Мин. символов",
+            [nameof(MinLengthTooltip)] =
+                "Включать только сообщения, содержащие не менее указанного количества символов",
+            [nameof(MaxLengthLabel)] = "Макс. символов",
+            [nameof(MaxLengthTooltip)] =
+                "Включать только сообщения, содержащие не более указанного количества символов",
+            [nameof(IncludeWordsLabel)] = "Содержит слова",
+            [nameof(IncludeWordsTooltip)] =
+                "Сообщения должны содержать эти слова (через пробел или запятую)",
+            [nameof(ExcludeWordsLabel)] = "Исключает слова",
+            [nameof(ExcludeWordsTooltip)] =
+                "Исключать сообщения, содержащие эти слова (через пробел или запятую)",
             [nameof(ReverseMessageOrderLabel)] = "Обратный порядок сообщений",
             [nameof(ReverseMessageOrderTooltip)] =
                 "Экспортировать сообщения в обратном хронологическом порядке (сначала новые)",

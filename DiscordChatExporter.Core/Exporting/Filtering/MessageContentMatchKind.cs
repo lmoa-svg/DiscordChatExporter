@@ -1,6 +1,6 @@
 namespace DiscordChatExporter.Core.Exporting.Filtering;
 
-internal enum MessageContentMatchKind
+public enum MessageContentMatchKind
 {
     Link,
     Embed,
