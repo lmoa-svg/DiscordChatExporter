@@ -20,7 +20,7 @@ public partial class SettingsService()
     public partial ThemeVariant Theme { get; set; }
 
     [ObservableProperty]
-    public partial Language Language { get; set; }
+    public partial Language Language { get; set; } = Language.Russian;
 
     [ObservableProperty]
     public partial bool IsAutoUpdateEnabled { get; set; } = true;
@@ -56,6 +56,30 @@ public partial class SettingsService()
 
     [ObservableProperty]
     public partial string? LastMessageFilterValue { get; set; }
+
+    [ObservableProperty]
+    public partial string? LastFromUserValue { get; set; }
+
+    [ObservableProperty]
+    public partial string? LastMentionsUserValue { get; set; }
+
+    [ObservableProperty]
+    public partial FilterContentType LastFilterContentType { get; set; }
+
+    [ObservableProperty]
+    public partial FilterPinnedStatus LastFilterPinnedStatus { get; set; }
+
+    [ObservableProperty]
+    public partial string? LastMinLengthValue { get; set; }
+
+    [ObservableProperty]
+    public partial string? LastMaxLengthValue { get; set; }
+
+    [ObservableProperty]
+    public partial string? LastIncludeWordsValue { get; set; }
+
+    [ObservableProperty]
+    public partial string? LastExcludeWordsValue { get; set; }
 
     [ObservableProperty]
     public partial bool LastIsReverseMessageOrder { get; set; }

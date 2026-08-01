@@ -12,6 +12,7 @@ using DiscordChatExporter.Core.Exporting.Filtering;
 using DiscordChatExporter.Core.Exporting.Partitioning;
 using DiscordChatExporter.Gui.Framework;
 using DiscordChatExporter.Gui.Localization;
+using DiscordChatExporter.Gui.Models;
 using DiscordChatExporter.Gui.Services;
 using PowerKit.Extensions;
 
@@ -63,6 +64,38 @@ public partial class ExportSetupViewModel(
     public partial string? MessageFilterValue { get; set; }
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(MessageFilter))]
+    public partial string? FromUserValue { get; set; }
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(MessageFilter))]
+    public partial string? MentionsUserValue { get; set; }
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(MessageFilter))]
+    public partial FilterContentType SelectedContentType { get; set; }
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(MessageFilter))]
+    public partial FilterPinnedStatus SelectedPinnedStatus { get; set; }
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(MessageFilter))]
+    public partial string? MinLengthValue { get; set; }
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(MessageFilter))]
+    public partial string? MaxLengthValue { get; set; }
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(MessageFilter))]
+    public partial string? IncludeWordsValue { get; set; }
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(MessageFilter))]
+    public partial string? ExcludeWordsValue { get; set; }
+
+    [ObservableProperty]
     public partial bool IsReverseMessageOrder { get; set; }
 
     [ObservableProperty]
@@ -84,6 +117,12 @@ public partial class ExportSetupViewModel(
 
     public IReadOnlyList<ExportFormat> AvailableFormats { get; } = Enum.GetValues<ExportFormat>();
 
+    public IReadOnlyList<FilterContentType> AvailableContentTypes { get; } =
+        Enum.GetValues<FilterContentType>();
+
+    public IReadOnlyList<FilterPinnedStatus> AvailablePinnedStatuses { get; } =
+        Enum.GetValues<FilterPinnedStatus>();
+
     public bool IsAfterDateSet => AfterDate is not null;
 
     public DateTimeOffset? After => AfterDate?.Add(AfterTime ?? TimeSpan.Zero);
@@ -97,10 +136,51 @@ public partial class ExportSetupViewModel(
             ? PartitionLimit.Parse(PartitionLimitValue)
             : PartitionLimit.Null;
 
-    public MessageFilter MessageFilter =>
-        !string.IsNullOrWhiteSpace(MessageFilterValue)
-            ? MessageFilter.Parse(MessageFilterValue)
-            : MessageFilter.Null;
+    public MessageContentMatchKind? ContentMatchKind =>
+        SelectedContentType switch
+        {
+            FilterContentType.Link => MessageContentMatchKind.Link,
+            FilterContentType.Embed => MessageContentMatchKind.Embed,
+            FilterContentType.File => MessageContentMatchKind.File,
+            FilterContentType.Video => MessageContentMatchKind.Video,
+            FilterContentType.Image => MessageContentMatchKind.Image,
+            FilterContentType.Sound => MessageContentMatchKind.Sound,
+            FilterContentType.Invite => MessageContentMatchKind.Invite,
+            _ => null,
+        };
+
+    public bool? PinnedStatus =>
+        SelectedPinnedStatus switch
+        {
+            FilterPinnedStatus.Yes => true,
+            FilterPinnedStatus.No => false,
+            _ => null,
+        };
+
+    public MessageFilter MessageFilter
+    {
+        get
+        {
+            var baseFilter = !string.IsNullOrWhiteSpace(MessageFilterValue)
+                ? MessageFilter.Parse(MessageFilterValue)
+                : MessageFilter.Null;
+
+            int? minLength = int.TryParse(MinLengthValue, out var min) ? min : null;
+            int? maxLength = int.TryParse(MaxLengthValue, out var max) ? max : null;
+
+            return MessageFilter.Combine(
+                baseFilter,
+                FromUserValue,
+                MentionsUserValue,
+                ContentMatchKind,
+                PinnedStatus,
+                IncludeWordsValue,
+                ExcludeWordsValue,
+                minLength,
+                maxLength
+            );
+        }
+    }
 
     public override Task InitializeAsync()
     {
@@ -108,6 +188,14 @@ public partial class ExportSetupViewModel(
         SelectedFormat = settingsService.LastExportFormat;
         PartitionLimitValue = settingsService.LastPartitionLimitValue;
         MessageFilterValue = settingsService.LastMessageFilterValue;
+        FromUserValue = settingsService.LastFromUserValue;
+        MentionsUserValue = settingsService.LastMentionsUserValue;
+        SelectedContentType = settingsService.LastFilterContentType;
+        SelectedPinnedStatus = settingsService.LastFilterPinnedStatus;
+        MinLengthValue = settingsService.LastMinLengthValue;
+        MaxLengthValue = settingsService.LastMaxLengthValue;
+        IncludeWordsValue = settingsService.LastIncludeWordsValue;
+        ExcludeWordsValue = settingsService.LastExcludeWordsValue;
         IsReverseMessageOrder = settingsService.LastIsReverseMessageOrder;
         ShouldFormatMarkdown = settingsService.LastShouldFormatMarkdown;
         ShouldDownloadAssets = settingsService.LastShouldDownloadAssets;
@@ -121,6 +209,14 @@ public partial class ExportSetupViewModel(
             || Before is not null
             || !string.IsNullOrWhiteSpace(PartitionLimitValue)
             || !string.IsNullOrWhiteSpace(MessageFilterValue)
+            || !string.IsNullOrWhiteSpace(FromUserValue)
+            || !string.IsNullOrWhiteSpace(MentionsUserValue)
+            || SelectedContentType != FilterContentType.Any
+            || SelectedPinnedStatus != FilterPinnedStatus.Any
+            || !string.IsNullOrWhiteSpace(MinLengthValue)
+            || !string.IsNullOrWhiteSpace(MaxLengthValue)
+            || !string.IsNullOrWhiteSpace(IncludeWordsValue)
+            || !string.IsNullOrWhiteSpace(ExcludeWordsValue)
             || ShouldDownloadAssets
             || ShouldReuseAssets
             || !string.IsNullOrWhiteSpace(AssetsDirPath)
@@ -190,6 +286,14 @@ public partial class ExportSetupViewModel(
         settingsService.LastExportFormat = SelectedFormat;
         settingsService.LastPartitionLimitValue = PartitionLimitValue;
         settingsService.LastMessageFilterValue = MessageFilterValue;
+        settingsService.LastFromUserValue = FromUserValue;
+        settingsService.LastMentionsUserValue = MentionsUserValue;
+        settingsService.LastFilterContentType = SelectedContentType;
+        settingsService.LastFilterPinnedStatus = SelectedPinnedStatus;
+        settingsService.LastMinLengthValue = MinLengthValue;
+        settingsService.LastMaxLengthValue = MaxLengthValue;
+        settingsService.LastIncludeWordsValue = IncludeWordsValue;
+        settingsService.LastExcludeWordsValue = ExcludeWordsValue;
         settingsService.LastIsReverseMessageOrder = IsReverseMessageOrder;
         settingsService.LastShouldFormatMarkdown = ShouldFormatMarkdown;
         settingsService.LastShouldDownloadAssets = ShouldDownloadAssets;

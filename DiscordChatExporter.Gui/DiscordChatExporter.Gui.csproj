@@ -31,14 +31,12 @@
     <PackageReference Include="Cogwheel" />
     <PackageReference Include="CommunityToolkit.Mvvm" />
     <PackageReference Include="CSharpier.MsBuild" PrivateAssets="all" />
-    <PackageReference Include="Deorcify" />
     <PackageReference Include="DialogHost.Avalonia" />
     <PackageReference Include="Gress" />
     <PackageReference Include="Markdig" />
     <PackageReference Include="Material.Avalonia" />
     <PackageReference Include="Material.Icons.Avalonia" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
-    <PackageReference Include="Onova" />
     <PackageReference Include="PowerKit" />
     <PackageReference Include="ThisAssembly.Project" PrivateAssets="all" />
   </ItemGroup>

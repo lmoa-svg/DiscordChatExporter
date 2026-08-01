@@ -5,6 +5,7 @@ public enum Language
     System,
     English,
     Ukrainian,
+    Russian,
     German,
     French,
     Spanish,

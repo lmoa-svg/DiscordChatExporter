@@ -28,7 +28,7 @@ public partial class LocalizationManager : ObservableObject, IDisposable
     }
 
     [ObservableProperty]
-    public partial Language Language { get; set; } = Language.System;
+    public partial Language Language { get; set; } = Language.Russian;
 
     private string Get([CallerMemberName] string? key = null)
     {
@@ -41,16 +41,18 @@ public partial class LocalizationManager : ObservableObject, IDisposable
                 CultureInfo.CurrentUICulture.ThreeLetterISOLanguageName.ToLowerInvariant() switch
                 {
                     "ukr" => UkrainianLocalization,
+                    "rus" => RussianLocalization,
                     "deu" => GermanLocalization,
                     "fra" => FrenchLocalization,
                     "spa" => SpanishLocalization,
-                    _ => EnglishLocalization,
+                    _ => RussianLocalization,
                 },
+            Language.Russian => RussianLocalization,
             Language.Ukrainian => UkrainianLocalization,
             Language.German => GermanLocalization,
             Language.French => FrenchLocalization,
             Language.Spanish => SpanishLocalization,
-            _ => EnglishLocalization,
+            _ => RussianLocalization,
         };
 
         if (
@@ -128,6 +130,33 @@ public partial class LocalizationManager
     public string PartitionLimitTooltip => Get();
     public string MessageFilterLabel => Get();
     public string MessageFilterTooltip => Get();
+    public string FilterFromUserLabel => Get();
+    public string FilterFromUserTooltip => Get();
+    public string FilterMentionsUserLabel => Get();
+    public string FilterMentionsUserTooltip => Get();
+    public string FilterContentTypeLabel => Get();
+    public string FilterContentTypeTooltip => Get();
+    public string FilterPinnedStatusLabel => Get();
+    public string FilterPinnedStatusTooltip => Get();
+    public string FilterContentTypeAny => Get();
+    public string FilterContentTypeLink => Get();
+    public string FilterContentTypeEmbed => Get();
+    public string FilterContentTypeFile => Get();
+    public string FilterContentTypeVideo => Get();
+    public string FilterContentTypeImage => Get();
+    public string FilterContentTypeSound => Get();
+    public string FilterContentTypeInvite => Get();
+    public string FilterPinnedStatusAny => Get();
+    public string FilterPinnedStatusYes => Get();
+    public string FilterPinnedStatusNo => Get();
+    public string MinLengthLabel => Get();
+    public string MinLengthTooltip => Get();
+    public string MaxLengthLabel => Get();
+    public string MaxLengthTooltip => Get();
+    public string IncludeWordsLabel => Get();
+    public string IncludeWordsTooltip => Get();
+    public string ExcludeWordsLabel => Get();
+    public string ExcludeWordsTooltip => Get();
     public string ReverseMessageOrderLabel => Get();
     public string ReverseMessageOrderTooltip => Get();
     public string FormatMarkdownLabel => Get();

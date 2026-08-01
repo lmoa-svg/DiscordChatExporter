@@ -103,9 +103,40 @@ public partial class LocalizationManager
             [nameof(PartitionLimitLabel)] = "Partition limit",
             [nameof(PartitionLimitTooltip)] =
                 "Split the output into partitions, each limited to the specified number of messages (e.g., '100') or file size (e.g., '10mb')",
-            [nameof(MessageFilterLabel)] = "Message filter",
+            [nameof(MessageFilterLabel)] = "Custom expression",
             [nameof(MessageFilterTooltip)] =
-                "Only include messages that satisfy this filter (e.g., 'from:foo#1234' or 'has:image'). See the documentation for more info.",
+                "Only include messages that satisfy this expression (e.g., 'from:foo#1234' or 'has:image'). See the documentation for more info.",
+            [nameof(FilterFromUserLabel)] = "From author",
+            [nameof(FilterFromUserTooltip)] = "Sent by specified user or bot (e.g., 'kutos0')",
+            [nameof(FilterMentionsUserLabel)] = "Mentions",
+            [nameof(FilterMentionsUserTooltip)] =
+                "Contains mention of specified user (e.g., 'kutos0')",
+            [nameof(FilterContentTypeLabel)] = "Contains content",
+            [nameof(FilterContentTypeTooltip)] =
+                "Filter messages by content type (links, embeds, files, images, etc.)",
+            [nameof(FilterPinnedStatusLabel)] = "Pinned status",
+            [nameof(FilterPinnedStatusTooltip)] = "Filter messages by pinned status",
+            [nameof(FilterContentTypeAny)] = "Any content",
+            [nameof(FilterContentTypeLink)] = "Links",
+            [nameof(FilterContentTypeEmbed)] = "Embeds",
+            [nameof(FilterContentTypeFile)] = "Files",
+            [nameof(FilterContentTypeVideo)] = "Videos",
+            [nameof(FilterContentTypeImage)] = "Images",
+            [nameof(FilterContentTypeSound)] = "Audio / Sound",
+            [nameof(FilterContentTypeInvite)] = "Invites",
+            [nameof(FilterPinnedStatusAny)] = "Any",
+            [nameof(FilterPinnedStatusYes)] = "Yes",
+            [nameof(FilterPinnedStatusNo)] = "No",
+            [nameof(MinLengthLabel)] = "Min characters",
+            [nameof(MinLengthTooltip)] = "Only include messages with at least this many characters",
+            [nameof(MaxLengthLabel)] = "Max characters",
+            [nameof(MaxLengthTooltip)] = "Only include messages with at most this many characters",
+            [nameof(IncludeWordsLabel)] = "Contains words",
+            [nameof(IncludeWordsTooltip)] =
+                "Only include messages containing these words (separated by spaces or commas)",
+            [nameof(ExcludeWordsLabel)] = "Exclude words",
+            [nameof(ExcludeWordsTooltip)] =
+                "Exclude messages containing these words (separated by spaces or commas)",
             [nameof(ReverseMessageOrderLabel)] = "Reverse messages",
             [nameof(ReverseMessageOrderTooltip)] =
                 "Export messages in reverse chronological order (newest first)",

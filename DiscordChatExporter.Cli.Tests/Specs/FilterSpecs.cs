@@ -165,4 +165,18 @@ public class FilterSpecs
             .Should()
             .AllSatisfy(c => c.Contains("This has mention", StringComparison.Ordinal));
     }
+
+    [Fact]
+    public void I_can_combine_message_filters_with_word_and_length_constraints()
+    {
+        var filter = MessageFilter.Combine(
+            includeWords: "apple",
+            excludeWords: "banana",
+            minLength: 5,
+            maxLength: 50
+        );
+
+        filter.Should().NotBeNull();
+        filter.Should().NotBe(MessageFilter.Null);
+    }
 }

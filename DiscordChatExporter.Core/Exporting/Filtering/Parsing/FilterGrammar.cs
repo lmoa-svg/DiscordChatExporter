@@ -88,6 +88,29 @@ internal static class FilterGrammar
         .Select(k => (MessageFilter)new HasMessageFilter(k))
         .Named("has:<value>");
 
+    private static readonly TextParser<int> Integer = Character
+        .Digit.AtLeastOnce()
+        .Text()
+        .Select(int.Parse);
+
+    private static readonly TextParser<MessageFilter> MinLengthFilter = Span.EqualToIgnoreCase(
+            "min-length:"
+        )
+        .Or(Span.EqualToIgnoreCase("min-len:"))
+        .Try()
+        .IgnoreThen(Integer)
+        .Select(v => (MessageFilter)new LengthMessageFilter(v, null))
+        .Named("min-length:<value>");
+
+    private static readonly TextParser<MessageFilter> MaxLengthFilter = Span.EqualToIgnoreCase(
+            "max-length:"
+        )
+        .Or(Span.EqualToIgnoreCase("max-len:"))
+        .Try()
+        .IgnoreThen(Integer)
+        .Select(v => (MessageFilter)new LengthMessageFilter(null, v))
+        .Named("max-length:<value>");
+
     // Make sure that property-based filters like 'has:link' don't prevent text like 'hello' from being parsed.
     // https://github.com/Tyrrrz/DiscordChatExporter/issues/909#issuecomment-1227575455
     private static readonly TextParser<MessageFilter> PrimitiveFilter = Parse.OneOf(
@@ -95,6 +118,8 @@ internal static class FilterGrammar
         MentionsFilter,
         ReactionFilter,
         HasFilter,
+        MinLengthFilter,
+        MaxLengthFilter,
         ContainsFilter
     );
 
